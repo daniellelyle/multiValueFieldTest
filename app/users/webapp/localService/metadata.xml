@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml">
+        <edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Core.V1.xml">
+        <edmx:Include Alias="Core" Namespace="Org.OData.Core.V1"/>
+    </edmx:Reference>
+    <edmx:DataServices>
+        <Schema Namespace="UsersService" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+            <EntityContainer Name="EntityContainer">
+                <EntitySet Name="Users" EntityType="UsersService.Users">
+                    <NavigationPropertyBinding Path="countries" Target="Users_countries"/>
+                </EntitySet>
+                <EntitySet Name="Countries" EntityType="UsersService.Countries">
+                    <NavigationPropertyBinding Path="users" Target="Users_countries"/>
+                </EntitySet>
+                <EntitySet Name="Users_countries" EntityType="UsersService.Users_countries">
+                    <NavigationPropertyBinding Path="up_" Target="Users"/>
+                    <NavigationPropertyBinding Path="country" Target="Countries"/>
+                </EntitySet>
+            </EntityContainer>
+            <EntityType Name="Users">
+                <Key>
+                    <PropertyRef Name="name"/>
+                </Key>
+                <Property Name="name" Type="Edm.String" MaxLength="255" Nullable="false"/>
+                <NavigationProperty Name="countries" Type="Collection(UsersService.Users_countries)" Partner="up_">
+                    <OnDelete Action="Cascade"/>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="Countries">
+                <Key>
+                    <PropertyRef Name="code"/>
+                </Key>
+                <Property Name="code" Type="Edm.String" MaxLength="3" Nullable="false"/>
+                <Property Name="name" Type="Edm.String" MaxLength="255"/>
+                <NavigationProperty Name="users" Type="Collection(UsersService.Users_countries)" Partner="country"/>
+            </EntityType>
+            <EntityType Name="Users_countries">
+                <Key>
+                    <PropertyRef Name="up__name"/>
+                    <PropertyRef Name="country_code"/>
+                </Key>
+                <NavigationProperty Name="up_" Type="UsersService.Users" Nullable="false" Partner="countries">
+                    <ReferentialConstraint Property="up__name" ReferencedProperty="name"/>
+                </NavigationProperty>
+                <Property Name="up__name" Type="Edm.String" MaxLength="255" Nullable="false"/>
+                <NavigationProperty Name="country" Type="UsersService.Countries" Partner="users">
+                    <ReferentialConstraint Property="country_code" ReferencedProperty="code"/>
+                </NavigationProperty>
+                <Property Name="country_code" Type="Edm.String" MaxLength="3" Nullable="false"/>
+            </EntityType>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>
