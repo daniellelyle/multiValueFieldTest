@@ -10,8 +10,9 @@ entity Users {
 
 @cds.odata.valuelist
 entity Countries {
-    key code  : String(3);
-        name  : String(255);
-        users : Association to many Users.countries
-                    on users.country = $self;
+    key code      : String(3);
+        name      : String(255);
+        continent : String(255);
+        users     : Association to many Users.countries
+                        on users.country = $self;
 }
