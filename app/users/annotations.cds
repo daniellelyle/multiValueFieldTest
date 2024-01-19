@@ -1,5 +1,4 @@
 using UsersService as service from '../../srv/users-service';
-using from '../../db/schema';
 
 annotate service.Users with @(UI.LineItem: [
     {
@@ -12,7 +11,7 @@ annotate service.Users with @(UI.LineItem: [
         Value: countries.country_code,
         Label: 'Countries',
     },
-]);
+]) @Common.SemanticKey: [name];
 
 annotate service.Users with @(
     UI.FieldGroup #GeneratedGroup1: {
