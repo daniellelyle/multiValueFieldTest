@@ -1,0 +1,7 @@
+<core:FragmentDefinition
+    xmlns:macros="sap.fe.macros"
+    xmlns:core="sap.ui.core"
+    xmlns="sap.m"
+>
+    <macros:Field metaPath="country" />
+</core:FragmentDefinition>

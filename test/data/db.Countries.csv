@@ -1,3 +1,5 @@
-code,name
-USA,United States
-BEL,Belgium
+code,name,continent
+USA,United States,North America
+BEL,Belgium,Europe
+KOR,Korea,Asia
+JPN,Japan,Asia
